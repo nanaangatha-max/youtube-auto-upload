@@ -2,8 +2,10 @@ name: YouTube Video Upload
 
 on:
   schedule:
-    - cron: '0 2 * * 1'    # Monday 8 AM IST (2:00 UTC)
-    - cron: '30 12 * * 4'  # Thursday 6 PM IST (6:30 PM IST = 1:00 PM UTC)
+    # Monday 8:00 AM IST = 2:30 AM UTC (use '0 2' for 2:00, '30 2' for 2:30)
+    - cron: '30 2 * * 1'
+    # Thursday 6:00 PM IST = 12:30 PM UTC
+    - cron: '30 12 * * 4'
   workflow_dispatch:
 
 jobs:
