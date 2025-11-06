@@ -1,0 +1,33 @@
+name: YouTube Auto Upload
+
+on:
+  schedule:
+    # Week 1 - Monday 8 AM UTC (13:30 IST)
+    - cron: "0 8 * * 1"
+    # Week 2 - Friday 12:30 PM UTC (6:00 PM IST)
+    - cron: "30 12 * * 5"
+  workflow_dispatch:
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install moviepy google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client gtts
+
+      - name: Run main script
+        env:
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
+        run: python main.py
