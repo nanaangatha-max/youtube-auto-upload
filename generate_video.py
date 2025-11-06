@@ -1,30 +1,9 @@
-from gtts import gTTS
-from moviepy.editor import ImageClip, AudioFileClip, concatenate_videoclips
-import os
-import random
-    
-# --- Step 1: Generate a random fact ---
-facts = [
-    "Rolls Royce cars are so quiet that engineers add artificial noise for safety.",
-    "Each Rolls Royce engine takes over 2 months to build by hand.",
-    "The Spirit of Ecstasy ornament can automatically retract to prevent theft.",
-    "The paint on some Rolls Royce cars contains real diamond dust.",
-    "Every Rolls Royce has an umbrella hidden in the door for luxury convenience."
-]
+from moviepy.editor import *
 
-fact = random.choice(facts)
-print("Selected fact:", fact)
+# Create video from image and audio/text
+image = ImageClip("rolls.jpg").set_duration(10)  # 10 sec image video
+text = TextClip("Interesting Facts About Rolls Royce", fontsize=50, color='white')
+text = text.set_position('center').set_duration(10)
 
-# --- Step 2: Convert text to speech ---
-tts = gTTS(text=fact, lang='en')
-tts.save("voice.mp3")
-
-# --- Step 3: Create video from image + audio ---
-image = "rolls.jpg"  # add an image file in repo
-clip = ImageClip(image).set_duration(10)
-audio = AudioFileClip("voice.mp3")
-clip = clip.set_audio(audio)
-
-# --- Step 4: Export final video ---
-clip.write_videofile("final_video.mp4", fps=24)
-print("🎬 Video created successfully!")
+video = CompositeVideoClip([image, text])
+video.write_videofile("video.mp4", fps=24)
